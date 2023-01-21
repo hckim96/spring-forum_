@@ -1,0 +1,50 @@
+.test {
+    background-color: black;
+}
+
+
+.field-error {
+    color: red !important;
+
+    border-color: red !important;
+}
+
+.title-cell>a {}
+
+.title-cell>a:visited {
+    color: #681da8;
+}
+
+.profile-row-item {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.my-row-item {
+    border-bottom: 1px solid #f1f3f5;
+}
+.my-row-item:last-child {
+    border-bottom: none;
+}
+
+.ttmp input[type='file'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: 0;
+    border: 0;
+}
+
+.table-row:hover {
+    background: #cecece;
+    cursor:pointer;
+}
+
+.comment {
+    border-bottom: 1px solid #f1f3f5;
+}
+.comment:last-child {
+    border-bottom: none;
+}
+

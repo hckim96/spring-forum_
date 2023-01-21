@@ -1,0 +1,140 @@
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <title>회원가입</title>-->
+<!--  &lt;!&ndash; Required meta tags &ndash;&gt;-->
+<!--  <meta charset="utf-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+<!--  <div th:replace="component/include :: head-meta"></div>-->
+<!--  &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">-->
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container" style="height: 100vh;">-->
+<!--  <div th:replace="component/navbar :: navbar"></div>-->
+<!--  <div class="login-form m-auto" style="width: 500px; height: 500px; background: lightblue; margin-top: 100px">-->
+<!--    <div class="form-group p-5">-->
+<!--      <form action="/signup" method="post" class="d-flex flex-column" th:object="${memberSignupDto}">-->
+
+<!--        <h1 class="" style="text-align: center">회원가입</h1>-->
+
+<!--        <label class="mt-3" for="loginId">아이디 <span style="color: red">*</span></label>-->
+<!--        <input type="text" th:field="*{loginId}" th:errorclass="field-error"-->
+<!--               class="form-control" name="loginId" id="loginId" aria-describedby="helpId" placeholder="아이디를 입력해주세요." required>-->
+
+<!--        <label class="mt-3" for="password">패스워드 <span style="color: red">*</span></label>-->
+<!--        <input type="password" th:field="*{password}" th:errorclass="field-error"-->
+<!--               class="form-control" name="password" id="password" aria-describedby="helpId"-->
+<!--               placeholder="패스워드를 입력해주세요." required>-->
+<!--        <button type="submit" class="btn btn-success my-5">회원가입</button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Optional JavaScript &ndash;&gt;-->
+<!--&lt;!&ndash; jQuery first, then Popper.js, then Bootstrap JS &ndash;&gt;-->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
+<!--        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
+<!--        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"-->
+<!--        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>회원가입</title>
+  <!-- include head-meta -->
+  <div th:replace="component/include :: head-meta"></div>
+  <!-- for local develop -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link th:href="@{/css/style.css}"
+        href="/static/css/style.css" rel="stylesheet">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      /*background: radial-gradient(circle at 10% 20%, rgb(161, 255, 206) 0%, rgb(250, 255, 209) 90%);*/
+      background: linear-gradient(115.3deg, rgba(114, 201, 185, 0.99) 7.4%, rgb(255, 255, 255) 103.1%);
+    }
+
+    .btn-login {
+      font-size: 0.9rem;
+      letter-spacing: 0.05rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .btn-google {
+      color: white !important;
+      background-color: #ea4335 !important;
+    }
+
+    .btn-facebook {
+      color: white !important;
+      background-color: #3b5998 !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+<div class="container " style="height: 100vh">
+  <a th:href="@{/}"><button class="btn btn-link btn-lg" style="color: green">홈</button></a>
+  <div class="" style="">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+          <h5 class="card-title text-center mb-5 fw-light fs-5">회원가입</h5>
+
+          <form th:object="${memberSignupDto}" action="/signup" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}">
+              <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                 th:text="${err}">글로벌 오류 메시지</p>
+            </div>
+
+              <div class="form-text field-error"  th:errors="*{loginId}">loginId Error</div>
+            <div class="form-floating mb-3">
+              <input th:field="*{loginId}" id="loginId" placeholder="아이디" class="form-control">
+              <label for="loginId">아이디</label>
+            </div>
+
+              <div class="form-text field-error"  th:errors="*{password}">password error</div>
+            <div class="form-floating mb-3">
+              <input th:field="*{password}"  type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
+              <label for="floatingPassword">비밀번호</label>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-success btn-login text-uppercase fw-bold" type="submit">회원가입</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- for local develop -->
+<link th:href="@{/css/bootstrap.min.css}"
+      href="/static/css/bootstrap.min.css" rel="stylesheet">
+<!-- include js -->
+<div th:replace="component/include :: js"></div>
+<!-- Optional JavaScript -->
+</body>
+</html>
+

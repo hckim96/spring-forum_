@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>로그인</title>
+  <!-- include head-meta -->
+  <div th:replace="component/include :: head-meta"></div>
+  <!-- for local develop -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link th:href="@{/css/style.css}"
+        href="/static/css/style.css" rel="stylesheet">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      /*background: radial-gradient(circle at 10% 20%, rgb(161, 255, 206) 0%, rgb(250, 255, 209) 90%);*/
+      background: linear-gradient(115.3deg, rgba(114, 201, 185, 0.99) 7.4%, rgb(255, 255, 255) 103.1%);
+    }
+
+    .btn-login {
+      font-size: 0.9rem;
+      letter-spacing: 0.05rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .btn-google {
+      color: white !important;
+      background-color: #ea4335 !important;
+    }
+
+    .btn-facebook {
+      color: white !important;
+      background-color: #3b5998 !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+<div class="container " style="height: 100vh">
+  <a th:href="@{/}"><button class="btn btn-link btn-lg" style="color: green">홈</button></a>
+  <div class="" style="">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+          <h3 th:if="${needLogin}" style="color: red; text-align: center">로그인이 필요한 페이지 입니다.</h3>
+          <h5 class="card-title text-center mb-5 fw-light fs-5">로그인</h5>
+
+          <form th:object="${memberLoginDto}" th:action action="/login" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}">
+              <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                 th:text="${err}">글로벌 오류 메시지</p> </div>
+
+            <div class="form-floating mb-3">
+              <input th:field="*{loginId}" id="loginId" placeholder="아이디" class="form-control">
+              <label for="loginId">아이디</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input th:field="*{password}"  type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
+              <label for="floatingPassword">비밀번호</label>
+            </div>
+
+<!--            <div class="form-check mb-3">-->
+<!--              <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">-->
+<!--              <label class="form-check-label" for="rememberPasswordCheck">-->
+<!--                Remember password-->
+<!--              </label>-->
+<!--            </div>-->
+            <div style="display: flex; justify-content: end; margin: 1.5rem;">
+              <a href="/signup">회원가입</a>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-success btn-login text-uppercase fw-bold" type="submit">로그인</button>
+            </div>
+
+<!--            <hr class="my-4">-->
+
+<!--            <div class="d-grid mb-2">-->
+<!--              <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" disabled>-->
+<!--                <i class="fab fa-google fa-g me-2"></i> 구글 로그인-->
+<!--              </button>-->
+<!--            </div>-->
+
+<!--            <div class="d-grid">-->
+<!--              <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit" disabled>-->
+<!--                <i class="fab fa-facebook-f me-2"></i> 페이스북 로그인-->
+<!--              </button>-->
+<!--            </div>-->
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- for local develop -->
+<link th:href="@{/css/bootstrap.min.css}"
+      href="/static/css/bootstrap.min.css" rel="stylesheet">
+<!-- include js -->
+<div th:replace="component/include :: js"></div>
+<!-- Optional JavaScript -->
+</body>
+</html>

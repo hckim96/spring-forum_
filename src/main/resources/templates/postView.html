@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>글 조회 페이지</title>
+    <!-- include head-meta -->
+    <div th:replace="component/include :: head-meta"></div>
+    <!-- for local develop -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/style.css}"
+          href="/static/css/style.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="component/navbar :: navbar"></div>
+
+<div class="container" style="">
+    <div class="post-wrapper m-auto align-items-center mt-5" th:object="${post}">
+        <div class="post-part shadow p-4" style="background-color: white">
+            <div class="mb-4">
+                <h1 th:text="*{title}">제목</h1>
+            </div>
+
+
+            <div th:if="${loginMember?.id} == *{author.id}" class="d-flex justify-content-end">
+<!--                <p th:text="*{author.id} == ${loginMember.id}"></p>-->
+<!--                <div th:if="${loginMember.id}" th:text="${loginMember} + 'asdfasdf'"></div>-->
+                <a th:href="@{/post/edit/{postId}(postId=*{id})}"><button class="btn btn-link text-decoration-none" style="color: green">수정</button></a>
+
+                <form th:action="@{/post/delete/{postId}(postId=*{id})}" method="post">
+                    <button class="btn btn-link text-decoration-none me-0 pe-0 " style="color: red">삭제</button>
+                </form>
+<!--                <a th:href="@{/post/delete/{postId}(postId=*{id})}"></a>-->
+            </div>
+
+            <div>
+<!--                포스트 부분 두번째 파트-->
+                <div class="d-flex flex-row justify-content-between pb-4 border-bottom">
+                    <div class="d-flex flex-row">
+                        <div>
+                            <a th:href="@{/profile/{authorLoginId}(authorLoginId=*{author.loginId})}" style="text-decoration: none">
+                                <img th:src="@{/asset/memberThumbnail/defaultProfile.png}" style="width: 3rem">
+                            </a>
+                        </div>
+                        <div class="d-flex flex-column ms-2">
+                            <a th:href="@{/profile/{authorLoginId}(authorLoginId=*{author.loginId})}" style="text-decoration: none">
+                                <div th:text="*{author.loginId}" style="color: #fc5356">author</div>
+                            </a>
+                            <small th:text="${T(com.example.jpamvc.myUtil.PrettyTimeString).convert(post.createdAt)}" th:title="${#temporals.format(post.createdAt, 'YYYY-MM-dd HH:mm:ss')}">date</small>
+                        </div>
+                    </div>
+                    <div>조회수 <span th:text="*{view}"> </span></div>
+                </div>
+            </div>
+            <div class="pt-3">
+<!--                post.body-->
+                <p th:each="line : ${#strings.arraySplit(post.body, '&#10;')}" th:text="${line}"></p>
+            </div>
+        </div>
+
+        <div class="comment-part shadow p-4 mt-5" style="background-color: white">
+            <h4 th:text="${post.comments.size()} + '개의 댓글'"> 8개의 댓글</h4>
+            <div class="post-comment-write-part mb-3">
+                <form action="/comment/write" method="post" class="mb-3">
+<!--                    <textarea class="w-100 p-2 font-large" placeholder="댓글을 작성하세요" style="height: 10rem; font-size: 16px;" name="body" required=""></textarea>-->
+<!--                    <input hidden="" name="parentModel" value="Post">-->
+<!--                    <div class="d-flex justify-content-end my-1">-->
+<!--                        <button class="btn btn-primary" type="submit" name="parent" value="<%=post._id%>">댓글 작성</button>-->
+<!--                    </div>-->
+
+                    <textarea class="w-100 p-2 font-large" placeholder="댓글을 작성하세요" style="height: 10rem; font-size: 16px;" name="body" required=""></textarea>
+                    <input hidden="" name="postId" th:value="${post.id}">
+                    <input hidden="" name="authorId" th:value="${loginMember?.id}?:null">
+                    <button class="btn btn-success float-end">댓글 쓰기</button>
+                </form>
+            </div>
+            <br>
+
+            <div class="comment my-4" th:each="comment: ${post.comments}">
+                <div class="comment-header">
+
+
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <div>
+                                <a th:href="@{/profile/{authorLoginId}(authorLoginId=${comment.author.loginId})}" style="text-decoration: none">
+                                    <img th:src="@{/asset/memberThumbnail/defaultProfile.png}" style="width: 3rem">
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column ms-2">
+                                <a th:href="@{/profile/{authorLoginId}(authorLoginId=${comment.author.loginId})}" style="text-decoration: none">
+                                    <div th:text="${comment.author.loginId}" style="color: #fc5356">author</div>
+                                </a>
+                                <small  th:title="${#temporals.format(post.createdAt, 'YYYY-MM-dd HH:mm:ss')}" th:text="${T(com.example.jpamvc.myUtil.PrettyTimeString).convert(comment.createdAt)}">date</small>
+                            </div>
+                        </div>
+
+
+                        <div th:if="${loginMember?.id} == ${comment.author.id}" class="d-flex justify-content-end float-end">
+                            <form th:action="@{/comment/delete/{commentId}(commentId=${comment.id})}" method="post">
+                                <button class="btn btn-link text-decoration-none me-0 pe-0 " style="color: red">삭제</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="comment-body p-2">
+                    <p th:each="line : ${#strings.arraySplit(comment.body, '&#10;')}" th:text="${line}"></p>
+                </div>
+            <div>
+
+        </div>
+    </div>
+
+</div>
+<!-- for local develop -->
+<link th:href="@{/css/bootstrap.min.css}"
+      href="/static/css/bootstrap.min.css" rel="stylesheet">
+<!-- include js -->
+<div th:replace="component/include :: js"></div>
+<!-- Optional JavaScript -->
+</body>
+</html>

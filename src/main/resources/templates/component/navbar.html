@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>navbar</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg shadow bg-body-tertiary" th:fragment="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">홈</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Link</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item dropdown">-->
+<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--            Dropdown-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu">-->
+<!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--            <li><hr class="dropdown-divider"></li>-->
+<!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--          </ul>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link disabled">Disabled</a>-->
+<!--        </li>-->
+      </ul>
+
+      <form class="d-flex me-3" method="get" action="/" role="search">
+        <input class="form-control me-2 " type="search" placeholder="글 제목으로 검색..." aria-label="Search" name="q">
+         <button class="btn btn-outline-primary text-nowrap" type="submit" onclick="">검색</button>
+      </form>
+
+        <div th:if="${loginMember}" class="d-flex">
+            <div class="mx-2"  style="max-width: 3rem;">
+                <a class="d-flex flex-column text-decoration-none" th:href="@{/profile/{userId}(userId=${loginMember.loginId})}" href="/profile/<%=userId%>" >
+<!--                    <img src=<%=user?.thumbnailUrl ?? "/asset/defaultProfile.png" %> class="img rounded-circle" alt="" onerror="((elem) => {elem.src='/asset/defaultProfile.png'})(this)">-->
+                    <img th:src="@{/asset/memberThumbnail/defaultProfile.png}" src="/asset/memberThumbnail/defaultProfile.png" class="img rounded-circle" alt="">
+                    <span class="font-bold font-italic" style="text-align: center; color: black;" th:text="${loginMember.loginId}">
+<!--                <%= userId %>-->
+                        asdf
+                    </span>
+                </a>
+            </div>
+            <a th:if="${loginMember}" class="btn btn-outline-success m-1 align-self-center" href="/logout">로그아웃</a>
+
+        </div>
+
+      <a th:unless="${loginMember}" class="btn btn-outline-success m-1" href="/login" th:href="@{/login(redirectUrl=${#request.getRequestURI()})}" >로그인</a>
+      <a th:unless="${loginMember}" class="btn btn-outline-success mr-1" href="/signup">회원가입</a>
+
+<!--        <p th:text="${#request.getRequestURI()}"> hello</p>--> <!--        /post/1 -->
+<!--        <p th:text="${#request.getRequestURL()}"> hello</p> http://localhost:8080/post/1-->
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+</body>

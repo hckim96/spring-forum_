@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>홈</title>
+    <!-- include head-meta -->
+    <div th:replace="component/include :: head-meta"></div>
+    <!-- for local develop -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/style.css}"
+          href="/static/css/style.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .rest-th {
+        width: 3.5rem;
+    }
+    .rest-td  {
+        text-align: left;
+    }
+    .rest-td > small{
+        word-break: keep-all;
+    }
+    .pagination {
+        --bs-pagination-hover-color: #146c43 !important;
+        --bs-pagination-focus-color: #146c43 !important;
+        --bs-pagination-active-border-color: #146c43 !important;
+        --bs-pagination-color: #146c43 !important;
+        --bs-pagination-active-bg: #146c43 !important;
+        --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(20, 108, 67, 0.25) !important;
+    }
+
+    </style>
+</head>
+<body>
+<div th:replace="component/navbar :: navbar"></div>
+
+<div class="container mt-5" style="">
+    <table class="table" >
+        <thead>
+        <tr>
+            <th class= 'rest-th px-1' scope="col" style="">#</th>
+            <th class= 'px-1' scope="col"  >제목</th>
+            <th class= 'rest-th px-0' scope="col">
+                <small>
+                작성자
+                </small>
+            </th>
+            <th class= 'rest-th px-1' scope="col">
+                <small>
+                작성일
+
+                </small>
+            </th>
+            <th class= 'rest-th px-0' scope="col">
+                <small>
+                조회수
+
+                </small>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr class="table-row" th:each="post: ${posts}">
+            <td  class="rest-td">
+                <small th:text="${post.id}">123</small>
+            </td>
+
+            <td class="title-cell px-0" th:onclick="'location.href=\'' + @{/post/{postId}(postId=${post.id})} + '\''">
+                <a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}" style="max-width:calc(100% - 1.75rem); display: inline-block; white-space: nowrap; text-overflow:ellipsis; overflow: hidden; vertical-align: middle;">1</a>
+                <span style="display: inline-block; width: auto; color: #0062cc; vertical-align: middle; " th:text="'[' + ${post.comments.size()} + ']'">
+                  [<%= commentCnt %>]
+                </span>
+            </td>
+
+            <td class="rest-td px-0" >
+                <small th:text="${post.author.loginId}">123</small>
+            </td>
+
+            <td class="rest-td px-0 " th:title="${#temporals.format(post.createdAt, 'YYYY-MM-dd HH:mm:ss')}">
+<!--                date-->
+                <small th:text="${T(com.example.jpamvc.myUtil.PrettyTimeString).convert(post.createdAt)}" ></small>
+            </td>
+
+            <td class="rest-td px-0 " >
+                <small th:text="${post.view}">123</small>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+        <nav aria-label="Page navigation " th:with="pageSection=${(page - 1) / 10}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${10 * pageSection == 0 ? 'disabled' : ' '}">
+                    <a class="page-link" th:href="@{/(page=10 * ${pageSection}, limit=${limit})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <th:block th:each="num : ${#numbers.sequence((10 * pageSection) + 1, totalPageNum < 10 * (1 + pageSection) ? (totalPageNum == 0 ? 1 : totalPageNum) : 10 * (1 + pageSection))}">
+                    <li class="page-item"><a class="page-link" th:href="@{/(page=${num}, limit=${limit}, q=${q})}" th:text="${num}" th:classappend="${page == num ? 'active' : ' '}"><%=i%></a></li>
+                </th:block>
+
+                <li class="page-item" th:classappend="${(totalPageNum - 1) / 10 == pageSection ? 'disabled' : ''}">
+                    <a class="page-link" href="/?page=<%= 10 * (pageSection + 1) + 1%>" th:href="@{/(page=${10 * (pageSection + 1) + 1}, limit=${limit})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+    <!--    write button-->
+    <div class = "d-flex justify-content-end b-10 mr-3">
+        <a href="/post/write" class="btn btn-success btn-lg active" role="button" aria-pressed="true">글쓰기</a>
+    </div>
+
+</div>
+
+
+<!-- for local develop -->
+<link th:href="@{/css/bootstrap.min.css}"
+      href="/static/css/bootstrap.min.css" rel="stylesheet">
+<!-- include js -->
+<div th:replace="component/include :: js"></div>
+<!-- Optional JavaScript -->
+</body>
+</html>

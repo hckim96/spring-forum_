@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>프로필</title>
+    <!-- include head-meta -->
+    <div th:replace="component/include :: head-meta"></div>
+    <!-- for local develop -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/style.css}"
+          href="/static/css/style.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="component/navbar :: navbar"></div>
+
+
+
+<!-- 가져옴-->
+<div class="container">
+    <div class="card text-left my-3 px-3">
+        <!-- 배경 사진 -->
+        <!-- <img class="card-img-top" src="holder.js/100px180/" alt=""> -->
+
+        <div class="col card-body">
+
+            <!-- 사진, 이름, 설명 행 -->
+            <div class="row ">
+
+                <div class="col" style="border-right: 0.5px solid lightgray; max-width: fit-content; justify-content: center;" >
+                    <div class="row justify-content-center mx-1" style="width: fit-content;">
+                        <img th:src="${profileMember?.thumbnail} ?: @{/asset/memberThumbnail/defaultProfile.png}" class="img rounded-circle" alt="">
+                    </div>
+
+<!--                    <form class="row justify-content-center mt-3 ttmp" th:action="@{|/member/${profileMember.loginId}/set-thumbnail|}" method="post" enctype="multipart/form-data">-->
+<!--                        <label for="uploadFile" type="button" class="col btn btn-primary p-1 profile-img-upload-button mb-0" style="min-width: 5rem; width: fit-content; font-size: .8rem; ">-->
+<!--                            사진 업로드-->
+<!--                        </label>-->
+<!--                        <input type="file" id="uploadFile" accept="image/png, image/jpeg, image/jpg" name="memberThumbnail">-->
+<!--                    </form>-->
+
+<!--                    <div class="row justify-content-center mt-3" style="">-->
+<!--                        <button type="button" class="col btn btn-primary p-1 " style="min-width: 5rem; width: fit-content; font-size: .8rem; " onclick="(() => {-->
+<!--                        console.log('사진 제거하기 버튼')-->
+<!--                        })()">-->
+<!--                            사진 제거하기-->
+<!--                        </button>-->
+<!--                    </div>-->
+                </div>
+
+
+                <!-- 위 오른쪽 부분 -->
+                <div class="col">
+                    <h1 class="" th:text="${profileMember.loginId}"><%= user.id %></h1>
+
+                    <br>
+
+                    <p class="profile-user-description-not-editing  my-4" style="font-size: 1rem;" th:text="${profileMember.description}">
+                        <%= user.description ?? '기본 설명'%>
+                    </p>
+
+                    <form th:action="@{|/member/${profileMember.loginId}/set-description|}" action="/api/user" method="post" class="form-group profile-user-description-editing d-none justify-content-end">
+                        <input type="text" required
+                               class="form-control" th:value="${profileMember.description}" name="description" id="description" aria-describedby="helpId" placeholder="설명을 입력해주세요.">
+                        <button type="submit" class="btn btn-sm btn-primary profile-user-description-editing float-right my-3">저장하기</button>
+                        <button type="button" class="btn btn-sm btn-link profile-user-description-editing float-right my-3 mr-1" onclick="((elem) => {
+                      $(elem).parent().parent().children('.profile-user-description-not-editing').toggleClass('d-none')
+                      $(elem).parent().parent().children('.profile-user-description-editing').toggleClass('d-none')
+                      })(this)">취소</button>
+                    </form>
+
+                    <button class="btn btn-sm btn-link p-0 profile-user-description-not-editing" onclick="((elem) => {
+                    $(elem).parent().children('.profile-user-description-not-editing').toggleClass('d-none')
+                    $(elem).parent().children('.profile-user-description-editing').toggleClass('d-none')
+                    })(this)">설명 수정하기</button>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="my-5"></div>
+
+        <!-- 밑에 파트 부분 행 -->
+<!--        <% for( let index = 0; index < 5; index++ ) { %>-->
+        <th:block class="comment my-4" th:each="num : ${#numbers.sequence(1,1)}">
+        <div class="my-2 profile-row-item my-row-item">
+            <div class="col w-100">
+                <div class="row">
+                    <h5 class="col" style="max-width: 33%;">회원 탈퇴</h5>
+
+
+                    <form th:if="${loginMember?.id} == ${profileMember.id}" th:action="@{/member/delete/{memberId}(memberId=${profileMember.id})}" method="post">
+                        <h3 class="col"> <button class="btn btn-danger">회원 탈퇴</button> </h3>
+                    </form>
+                </div>
+                <div class="row text-muted">
+                    <div class="col">
+                        탈퇴 시 작성한 글, 댓글이 모두 삭제됩니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <% } %>-->
+
+
+
+    </th:block>
+</div>
+</div>
+
+<!-- 가져옴-->
+
+
+
+
+
+
+
+<!-- for local develop -->
+<link th:href="@{/css/bootstrap.min.css}"
+      href="/static/css/bootstrap.min.css" rel="stylesheet">
+<!-- include js -->
+<div th:replace="component/include :: js"></div>
+<!-- Optional JavaScript -->
+<script>
+    $(document).ready(function () {
+        $("#uploadFile").on('change',function(){
+            console.log(`uploadFile changed`);
+            console.log(`$("#uploadFile").val(): ${$("#uploadFile").val()}`)
+            this.parentElement.submit();
+            // console.dir(this.parentElement.submit())
+        });
+    })
+
+</script>
+
+</body>
+</html>

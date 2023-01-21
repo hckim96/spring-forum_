@@ -1,0 +1,11 @@
+-- insert into member (member_id, created_at, modified_at, login_id, password) values (1, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'admin', '$2a$10$oPe5ZxwGVnZ/hrRJHdAg7uTEjaGQhxRsZqe7CY/w7az5OzSxonkoi');
+-- insert into member (member_id, created_at, modified_at, login_id, password) values (2, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'admin2', '$2a$10$oPe5ZxwGVnZ/hrRJHdAg7uTEjaGQhxRsZqe7CY/w7az5OzSxonkoi');
+-- insert into member (member_id, created_at, modified_at, login_id, password) values (3, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'admin3', '$2a$10$oPe5ZxwGVnZ/hrRJHdAg7uTEjaGQhxRsZqe7CY/w7az5OzSxonkoi');
+-- insert into post values (1, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '1', 1);
+-- insert into post values (2, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '2', 1);
+-- insert into post values (3, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '3', 1);
+-- insert into post values (4, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '4', 1);
+-- insert into post values (5, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '5', 1);
+-- insert into post values (6, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '6', 2);
+-- insert into post values (7, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '7', 2);
+-- insert into post values (8, '2023-01-19T23:42:05.036907', '2023-01-19T23:42:05.036907', 'post body', 'post title1', '8', 2);
